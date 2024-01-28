@@ -30,7 +30,7 @@ export const useMovieStore = defineStore('movie', () => {
         try {
             console.log('Calling getAll with query:', query.value);
             const response = await axios.get(`http://www.omdbapi.com/?s=${query.value}&r=json&apikey=d891a5b`);
-            searchResults.value = response.data;
+            searchResults.value = response.data.Search;
             console.log('Search Results:', searchResults.value);
         } catch (error) {
             console.error('Error fetching search results:', error);
