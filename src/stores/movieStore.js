@@ -8,13 +8,13 @@ export const useMovieStore = defineStore('movie', () => {
     const searchResults = ref([]);
     const query = ref('');
     const favMovie = ref([]);
-    const dataMovie =ref([])
+    const dataMovie =ref([]);
 
     const searchResultsValue = computed(()=>{
        return searchResults.value
     })
     const favData=computed(()=>{
-        return favMovie.value
+        return dataMovie.value
     })
     const getMovie = async () => {
         const response = await axios.get('http://www.omdbapi.com/?type=movie&apikey=d891a5b');
@@ -45,14 +45,16 @@ export const useMovieStore = defineStore('movie', () => {
       favMovie.value.push(imdbID)
        localStorage.setItem('favourite',JSON.stringify(favMovie.value))
            console.log(favMovie.value)
+       getMovieDetails(imdbID);
    }
-     const getMovieDetails = async (imdbID) => {
+    const getMovieDetails = async (imdbID) => {
         try {
-            const response = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&r=json&apikey=d891a5b`);
-            this.$patch({dataMovie : response.data.Search});
+            const response = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&apikey=d891a5b`);
+            dataMovie.value = response.data;
+            console.log('Movie Details:', dataMovie.value);
+            // Handle the movie details as needed, such as updating state or displaying information
         } catch (error) {
             console.error('Error fetching movie details:', error);
-            throw error;
         }
     };
     return {
@@ -64,6 +66,7 @@ export const useMovieStore = defineStore('movie', () => {
         favMovie,
         searchResultsValue,
         dataMovie,
+        favData,
         getFavMovie,
         getMovieDetails,
         getMovie,
