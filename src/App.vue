@@ -1,14 +1,30 @@
 <template>
 <div id="app">
-  <router-link to="/"></router-link>
+  <nav class="v-col-12 mt-6"style="font-family: Poppins">
+    <ul class="d-inline-flex" style="margin-left: 545px;list-style-type: none;">
+      <li>
+        <router-link to="/favMovie" style="color: rebeccapurple">my favs</router-link>
+      </li>
+      <li class="pl-10">
+        <router-link to="/">home</router-link>
+      </li>
+      <li class="pl-10">
+        <router-link to="/film">film</router-link>
+      </li>
+      <li class="pl-10">
+        <router-link to="/series">series</router-link>
+      </li>
+      <li class="pl-10">
+        <router-link to="/liveTv">tv Show</router-link>
+      </li>
+    </ul>
+  </nav>
   <router-view/>
   </div>
 </template>
 <script>
-
 export default {
-  name: 'App',
-
+  name :'app'
 }
 </script>
 <style>
@@ -22,6 +38,11 @@ font-family: 'Signika', sans-serif;
 font-family: 'Nunito', sans-serif;
 font-family: 'Poppins', sans-serif;
 */
+ul li a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
 body{
   height: 800px;
   background-color: #222;
@@ -31,4 +52,5 @@ body{
   padding: 0;
   box-sizing: border-box;
 }
+
 </style>

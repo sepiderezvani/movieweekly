@@ -7,9 +7,14 @@ export const useMovieStore = defineStore('movie', () => {
     const episode = ref([]);
     const searchResults = ref([]);
     const query = ref('');
+    const favMovie = ref([]);
+    const dataMovie =ref([])
 
     const searchResultsValue = computed(()=>{
        return searchResults.value
+    })
+    const favData=computed(()=>{
+        return favMovie.value
     })
     const getMovie = async () => {
         const response = await axios.get('http://www.omdbapi.com/?type=movie&apikey=d891a5b');
@@ -36,17 +41,31 @@ export const useMovieStore = defineStore('movie', () => {
             console.error('Error fetching search results:', error);
         }
     };
-    const updateSearchResults = (data) => {
-        searchResults.value = data;
+   const getFavMovie =(imdbID)=>{
+      favMovie.value.push(imdbID)
+       localStorage.setItem('favourite',JSON.stringify(favMovie.value))
+           console.log(favMovie.value)
+   }
+     const getMovieDetails = async (imdbID) => {
+        try {
+            const response = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&r=json&apikey=d891a5b`);
+            this.$patch({dataMovie : response.data.Search});
+        } catch (error) {
+            console.error('Error fetching movie details:', error);
+            throw error;
+        }
     };
-
     return {
         movies,
         series,
         episode,
         searchResults,
         query,
+        favMovie,
         searchResultsValue,
+        dataMovie,
+        getFavMovie,
+        getMovieDetails,
         getMovie,
         getSeries,
         getEpisode,
