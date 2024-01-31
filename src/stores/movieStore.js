@@ -41,18 +41,12 @@ export const useMovieStore = defineStore('movie', () => {
             console.error('Error fetching search results:', error);
         }
     };
-   const getFavMovie =(imdbID)=>{
-      favMovie.value.push(imdbID)
-       localStorage.setItem('favourite',JSON.stringify(favMovie.value))
-           console.log(favMovie.value)
-       getMovieDetails(imdbID);
-   }
-    const getMovieDetails = async (imdbID) => {
+    const getFavMovie = async (imdbID) => {
         try {
             const response = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&apikey=d891a5b`);
-            dataMovie.value = response.data;
-            console.log('Movie Details:', dataMovie.value);
-            // Handle the movie details as needed, such as updating state or displaying information
+            favMovie.value.push(response.data); // Push movie details to dataMovies array
+            localStorage.setItem('favourite', JSON.stringify(favMovie.value));
+            console.log(favMovie.value);
         } catch (error) {
             console.error('Error fetching movie details:', error);
         }
@@ -68,7 +62,6 @@ export const useMovieStore = defineStore('movie', () => {
         dataMovie,
         favData,
         getFavMovie,
-        getMovieDetails,
         getMovie,
         getSeries,
         getEpisode,

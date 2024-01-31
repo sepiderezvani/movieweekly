@@ -1,23 +1,22 @@
 <script setup>
 import {useMovieStore} from "@/stores/movieStore.js";
-import {watchEffect, toRefs} from 'vue'
+import {watch, toRefs } from 'vue'
 const movieStore = useMovieStore();
 const {query, searchResultsValue} = toRefs(movieStore)
-const {getAll , getFavMovie} = movieStore;
-
-watchEffect(async () => {
-  await getAll();
-})
+const {getAll , getFavMovie ,favMovieData} = movieStore;
+function call_api(){
+  getAll()
+}
 </script>
 <template>
     <v-container>
-    <v-form>
-      <input type="text"
-             class="pl-4"
-             v-model="query"
-             placeholder="enter your movie"
-      >
-    </v-form>
+      <div>
+        <input type="text"
+                class="pl-4"
+                v-model="query"
+                placeholder="enter your movie"
+               @input="call_api"
+      ></div>
       <v-row v-if="searchResultsValue.length > 0">
         <v-col class="v-col-3 d-inline-flex pl-5 mt-12"
                v-for="result in searchResultsValue"
@@ -43,9 +42,9 @@ watchEffect(async () => {
                   {{ result.Year }}</p>
                 <p>{{ result.Director }}</p>
               </v-card-text>
-              <button
+              <button class="ml-6"
                   @click="getFavMovie(result.imdbID)"
-              >fav
+             > add to fav
               </button>
             </div>
           </v-card>
@@ -84,5 +83,14 @@ img:hover{
   transition: 500ms;
   cursor: pointer;
 
+}
+button{
+  background-color: rgba(102, 51, 153, 0.40);
+  color: rgba(255, 255, 255, 0.70);
+  font-family: Poppins;
+  padding: 6px;
+  border-radius: 12px;
+  font-weight: 400;
+  font-size: .7rem;
 }
 </style>
