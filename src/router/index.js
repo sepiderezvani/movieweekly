@@ -6,11 +6,11 @@ import liveTv from '@/components/liveTv.vue'
 import navbar from "../components/searchResult.vue";
 import favMovie from "@/components/favMovie.vue";
 const routes = [
-    {
-        path: '/',
-        name :'home',
-        component: home
-    },
+             {
+              path: '/',
+                 name :'home',
+              component: home
+             },
             {
                 path: '/favMovie',
                 name: 'favMovie',

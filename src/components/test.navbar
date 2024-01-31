@@ -33,3 +33,13 @@ console.error('Error fetching search results:', error);
 },
 }
 })
+////////////////////////////
+const getMovieDetails = async (imdbID) => {
+try {
+const response = await axios.get(`http://www.omdbapi.com/?i=${imdbID}&r=json&apikey=d891a5b`);
+this.$patch({dataMovie : response.data.Search});
+} catch (error) {
+console.error('Error fetching movie details:', error);
+throw error;
+}
+};
